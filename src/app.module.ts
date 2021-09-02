@@ -3,11 +3,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductosModule } from './productos/productos.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UsuariosController } from './usuarios/usuarios.controller';
+import { UsuariosService } from './usuarios/usuarios.service';
+import { UsuariosModule } from './usuarios/usuarios.module';
 
 @Module({
   imports: [
-    ProductosModule,
+    ProductosModule,UsuariosModule,
     MongooseModule.forRoot('mongodb://localhost/productosApi1'),
+    
   ],
   controllers: [AppController],
   providers: [AppService],

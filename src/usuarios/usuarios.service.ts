@@ -20,7 +20,11 @@ export class UsuariosService {
    const hash = await bcrypt.hash(password, salt);
   return userCreate.password =hash;
   }
+  async comparePassWord(hash,password){
 
+   const isMatch = await bcrypt.compare(password, hash);
+
+  }
   async  createUser(userCreate:CreateDtoUsuario):Promise<CreateUsuarioInterface>{
          const userExist= await this.usuariosModel.findOne({email:userCreate.email});
 

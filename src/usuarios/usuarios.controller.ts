@@ -10,6 +10,7 @@ export class UsuariosController {
 
   @Post()
   async createUser(@Body()CreateDtoUsuario:CreateDtoUsuario):Promise<CreateUsuarioInterface> {
+    
     return await this.usuariosService.createUser(CreateDtoUsuario);
     
   }

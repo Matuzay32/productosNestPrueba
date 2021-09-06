@@ -1,4 +1,4 @@
-import { Injectable,NotFoundException} from '@nestjs/common';
+import { Injectable,NotFoundException,Res} from '@nestjs/common';
 import { Mongoose } from 'mongoose';
 import {InjectModel}  from "@nestjs/mongoose";
 import {Model} from "mongoose";
@@ -6,6 +6,8 @@ import {UsuarioSchema} from "./schemas/usuario.schema";
 import { CreateDtoUsuario } from './dto/usuario.dto';
 import {CreateUsuarioInterface} from "./interfaces/usuario.interface"
 import * as bcrypt from 'bcrypt';
+import{Config,secret} from "./interfaces/usuario.interface"
+import{sign} from "jsonwebtoken"
 
 
 
@@ -28,7 +30,7 @@ export class UsuariosService {
     }
 
 
-    async createUser(userCreate: CreateDtoUsuario): Promise < CreateUsuarioInterface > {
+    async createUser(userCreate: CreateDtoUsuario): Promise<{token:string} | CreateUsuarioInterface>{
         const userExist = await this.usuariosModel.findOne({
             email: userCreate.email
         });
@@ -39,9 +41,17 @@ export class UsuariosService {
 
 
         const usuario = this.usuariosModel.create(userCreate);
+        const usuarioModi= await usuario;
+        const token=sign({id: usuarioModi._id},secret.secretKey,{
+            expiresIn:86400,//Expira en 24h
 
-
-        return (await usuario).save();
+        });
+        
+        const objToken={
+            token:token
+        }
+        
+        return ((await usuario).save(),objToken);
     }
 
 

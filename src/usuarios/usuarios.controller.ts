@@ -9,8 +9,7 @@ export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post()
-  async createUser(@Body()CreateDtoUsuario:CreateDtoUsuario):Promise<CreateUsuarioInterface> {
-    
+  async createUser(@Body()CreateDtoUsuario:CreateDtoUsuario):Promise<{token:string} | CreateUsuarioInterface> {
     return await this.usuariosService.createUser(CreateDtoUsuario);
     
   }

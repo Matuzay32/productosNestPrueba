@@ -18,6 +18,12 @@ export class UsuariosController {
   getAllUsers():Promise<CreateUsuarioInterface[]> {
     return this.usuariosService.findAllUsers();
   }
+  @Get("/:id")
+  findOne(@Param("id")id:string):Promise<CreateUsuarioInterface>{
+    return this.usuariosService.findOneUser(id);
+
+
+  }
 
   @Delete("/:id")
   deleteUser(@Param("id")id:string):Promise<CreateUsuarioInterface>{

@@ -31,16 +31,13 @@ export class UsuariosService {
 
 
     async createUser(userCreate: CreateDtoUsuario): Promise<{token:string} | CreateUsuarioInterface>{
-        const userExist = await this.usuariosModel.findOne({
-            email: userCreate.email
-        });
+        
 
-        if (userExist) throw new NotFoundException("El Usuario ya se encuentra en la base de datos");
+       // if (userExist) throw new NotFoundException("El Usuario ya se encuentra en la base de datos");
         //ENCRIPTO PASSWORD
         await this.encriptPassword(userCreate)
-
-
         const usuario = this.usuariosModel.create(userCreate);
+
         const usuarioModi= await usuario;
         const token=sign({id: usuarioModi._id},secret.secretKey,{
             expiresIn:86400,//Expira en 24h
@@ -51,7 +48,7 @@ export class UsuariosService {
             token:token
         }
         
-        return ((await usuario).save(),objToken);
+        return ((await usuario).save());
     }
 
 
@@ -76,5 +73,11 @@ export class UsuariosService {
         return await this.usuariosModel.findByIdAndUpdate(id, dto);
     }
 
-    
+    async findByEmail(email:string){
+        const userExist = await this.usuariosModel.findOne({
+             email
+        });
+
+        return userExist;
+    }
 }

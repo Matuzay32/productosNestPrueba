@@ -23,6 +23,6 @@ export class AuthController {
     @UseGuards(AuthGuard("jwt"))
     @Get("profileAcount")
     profileAcount(){
-        return "datos de cuenta"
+        return "se autorizo perfectamente el usuario, datos de cuenta" 
     }
 }

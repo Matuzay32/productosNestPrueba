@@ -3,7 +3,7 @@ import { ProductosService } from './productos.service';
 import { ProductoInterface } from './interfaces/producto.interface';
 import { CreateProductoDto } from './dto/productos.dto';
 import{Response}from "express";
-import { ApiBearerAuth,ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth,ApiTags,ApiBody,ApiResponse,ApiProperty} from '@nestjs/swagger';
 
 @ApiTags("Products")
 @Controller('productos')
@@ -23,8 +23,7 @@ export class ProductosController {
      console.log(producto)
      return producto;
   }
-
-
+ 
   @Post()
   async create(@Body() CreateProductoDto: CreateProductoDto[]) {
     CreateProductoDto.forEach((element) => {

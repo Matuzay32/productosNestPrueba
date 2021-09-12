@@ -1,9 +1,8 @@
-import { Controller, Post,Get, UseGuards, Req} from '@nestjs/common';
+import { Controller, Post,Get, UseGuards, Req,} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/decorators';
 import {CreateUsuarioInterface,Config,secret}from "../usuarios/interfaces/usuario.interface"
 import { AuthService } from './auth.service';
-
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService:AuthService){
@@ -23,6 +22,6 @@ export class AuthController {
     @UseGuards(AuthGuard("jwt"))
     @Get("profileAcount")
     profileAcount(){
-        return "se autorizo perfectamente el usuario, datos de cuenta" 
+        return "se autorizo perfectamente el usuario, datos de cuenta" ;
     }
 }

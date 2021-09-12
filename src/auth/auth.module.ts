@@ -11,7 +11,7 @@ import{secret }from "../usuarios/interfaces/usuario.interface"
   imports: [PassportModule,UsuariosModule,PassportModule, 
     JwtModule.register({
     secret: secret.secretKey,
-    signOptions: { expiresIn: '58min' },
+    signOptions: { expiresIn: '15min' },
   }),],
 
   providers: [AuthService,LocalStrategy,JwtStrategy],

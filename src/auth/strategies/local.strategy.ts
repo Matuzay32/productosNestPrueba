@@ -18,7 +18,6 @@ export class LocalStrategy extends PassportStrategy (Strategy){
 
     async validate(email:string,password:string){
         const user = await this.authService.validateUser(email,password);
-        // console.log(email,password);
         if(!user) throw new NotFoundException("El Usuario no esta en la base de datos");
         return user;
         

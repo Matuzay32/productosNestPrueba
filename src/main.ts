@@ -10,6 +10,7 @@ const options = new DocumentBuilder()
 .setDescription("Esta es mi primer api de productos en nest")
 .setVersion("1.0")
 .addTag("productsApi")
+.addBearerAuth()
 .build();
 
 
@@ -20,6 +21,7 @@ swaggerOptions:{
   filter:true,
   showRequestDuration:true,
   
+    
 }
 
 

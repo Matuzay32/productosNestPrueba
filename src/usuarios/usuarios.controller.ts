@@ -3,8 +3,9 @@ import { UsuariosService } from './usuarios.service';
 import{CreateUsuarioInterface} from "./interfaces/usuario.interface"
 import {CreateDtoUsuario} from "./dto/usuario.dto"
 import { Response } from 'express';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty,ApiTags } from '@nestjs/swagger';
 
+@ApiTags(`Users`)
 @Controller("usuarios")
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}

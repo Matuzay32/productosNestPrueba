@@ -3,7 +3,9 @@ import { ProductosService } from './productos.service';
 import { ProductoInterface } from './interfaces/producto.interface';
 import { CreateProductoDto } from './dto/productos.dto';
 import{Response}from "express";
+import { ApiBearerAuth,ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Products")
 @Controller('productos')
 export class ProductosController {
   constructor(private readonly productoServ: ProductosService) {}

@@ -1,14 +1,19 @@
 import { Controller, Post,Get, UseGuards, Req,} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth,ApiTags } from '@nestjs/swagger';
 import { User } from 'src/decorators';
 import {CreateUsuarioInterface,Config,secret}from "../usuarios/interfaces/usuario.interface"
 import { AuthService } from './auth.service';
+@ApiTags("User auth")
+
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService:AuthService){
 
     }
+
+
+
     @UseGuards(AuthGuard("local"))
     
     @Post("login")
@@ -20,6 +25,10 @@ export class AuthController {
         return {message: "success login",accessToken:data.accessToken};
 
     }
+
+
+
+
     @UseGuards(AuthGuard("jwt"))
     @ApiBearerAuth()
     @Get("profileAcount")

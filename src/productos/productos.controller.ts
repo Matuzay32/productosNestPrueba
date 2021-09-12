@@ -16,12 +16,15 @@ export class ProductosController {
     isArray:true
   })
   @Get()
-  findAll():Promise<ProductoInterface[]> {
+  findAll():Promise<CreateProductoDto[]> {
     return this.productoServ.findAll();
   }
 
 
-
+  @ApiOkResponse({
+    description: 'List of products',
+    type: CreateProductoDto,
+  })
   @Get("/:id")
  async findOne(@Param("id")id){
   const producto=await this.productoServ.findOne(id);
@@ -44,7 +47,10 @@ export class ProductosController {
     });
   }
 
-
+  @ApiOkResponse({
+    description: 'List of products',
+    type: CreateProductoDto,
+  })
   @Delete("/:id")
   async deleteProduct(@Param("id")id){
    const producto=await this.productoServ.deleteProduct(id);

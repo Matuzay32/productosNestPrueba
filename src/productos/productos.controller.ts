@@ -3,7 +3,7 @@ import { ProductosService } from './productos.service';
 import { ProductoInterface } from './interfaces/producto.interface';
 import { CreateProductoDto } from './dto/productos.dto';
 import{Response}from "express";
-import { ApiBody,ApiBearerAuth,ApiTags,ApiResponse,ApiProperty,ApiOkResponse} from '@nestjs/swagger';
+import { ApiBody,ApiBearerAuth,ApiTags,ApiResponse,ApiProperty,ApiOkResponse,ApiParam,ApiQuery} from '@nestjs/swagger';
 
 @ApiTags("Products")
 @Controller('productos')
@@ -25,6 +25,7 @@ export class ProductosController {
     description: 'List of products',
     type: CreateProductoDto,
   })
+  @ApiParam({name: 'id', required: true, description: "poner id para obtener el producto"})
   @Get("/:id")
  async findOne(@Param("id")id){
   const producto=await this.productoServ.findOne(id);
@@ -51,8 +52,10 @@ export class ProductosController {
     description: 'List of products',
     type: CreateProductoDto,
   })
+  @ApiParam({name: 'id', required: true, description: "poner id para borrar producto"})
   @Delete("/:id")
-  async deleteProduct(@Param("id")id){
+  
+  async deleteProduct(@Param("id")id ){
    const producto=await this.productoServ.deleteProduct(id);
       if(!producto)throw new NotFoundException("no existe el producto");
       console.log(producto)
@@ -60,7 +63,11 @@ export class ProductosController {
    }
 
 
-
+   @ApiQuery({ name: 'id' })
+   @ApiBody({
+    description: 'List of products',
+    type: CreateProductoDto,
+  })
    @Put()
    // de esta forma se puede hacer un metodo put por la busqueda o query
    //es similar al param

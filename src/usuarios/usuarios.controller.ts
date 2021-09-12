@@ -8,7 +8,7 @@ import { ApiProperty } from '@nestjs/swagger';
 @Controller("usuarios")
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
-@ApiProperty()
+
   @Post()
   async createUser(@Body()CreateDtoUsuario:CreateDtoUsuario):Promise<{token:string} | CreateUsuarioInterface> {
     return await this.usuariosService.createUser(CreateDtoUsuario);

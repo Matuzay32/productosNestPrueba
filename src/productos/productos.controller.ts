@@ -22,7 +22,7 @@ export class ProductosController {
 
 
   @ApiOkResponse({
-    description: 'List of products',
+    description: 'find product',
     type: CreateProductoDto,
   })
   @ApiParam({name: 'id', required: true, description: "poner id para obtener el producto"})
@@ -49,7 +49,7 @@ export class ProductosController {
   }
 
   @ApiOkResponse({
-    description: 'List of products',
+    description: 'Product delete',
     type: CreateProductoDto,
   })
   @ApiParam({name: 'id', required: true, description: "poner id para borrar producto"})
@@ -65,7 +65,7 @@ export class ProductosController {
 
    @ApiQuery({ name: 'id' })
    @ApiBody({
-    description: 'List of products',
+    description: 'Update Product',
     type: CreateProductoDto,
   })
    @Put()

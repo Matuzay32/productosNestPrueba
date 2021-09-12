@@ -3,14 +3,20 @@ import { ProductosService } from './productos.service';
 import { ProductoInterface } from './interfaces/producto.interface';
 import { CreateProductoDto } from './dto/productos.dto';
 import{Response}from "express";
-import { ApiBearerAuth,ApiTags,ApiBody,ApiResponse,ApiProperty} from '@nestjs/swagger';
+import { ApiBody,ApiBearerAuth,ApiTags,ApiResponse,ApiProperty,ApiOkResponse} from '@nestjs/swagger';
 
 @ApiTags("Products")
 @Controller('productos')
 export class ProductosController {
   constructor(private readonly productoServ: ProductosService) {}
+
+  @ApiOkResponse({
+    description: 'List of products',
+    type: CreateProductoDto,
+    isArray:true
+  })
   @Get()
-  findAll() {
+  findAll():Promise<ProductoInterface[]> {
     return this.productoServ.findAll();
   }
 
@@ -23,7 +29,13 @@ export class ProductosController {
      console.log(producto)
      return producto;
   }
- 
+  
+  
+  @ApiBody({
+    description: 'List of products',
+    type: CreateProductoDto,
+    isArray:true
+  })
   @Post()
   async create(@Body() CreateProductoDto: CreateProductoDto[]) {
     CreateProductoDto.forEach((element) => {

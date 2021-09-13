@@ -1,9 +1,11 @@
 import { Controller, Post,Get, UseGuards, Req,} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth,ApiTags } from '@nestjs/swagger';
+import { ApiBody,ApiBearerAuth,ApiTags,ApiResponse,ApiProperty,ApiOkResponse,ApiParam,ApiQuery} from '@nestjs/swagger';
+
 import { User } from 'src/decorators';
 import {CreateUsuarioInterface,Config,secret}from "../usuarios/interfaces/usuario.interface"
 import { AuthService } from './auth.service';
+import {LoginDtoUser} from "./dto/login.dto"
 @ApiTags("User auth")
 
 @Controller('auth')
@@ -16,6 +18,10 @@ export class AuthController {
 
     @UseGuards(AuthGuard("local"))
     
+    @ApiBody({
+        description: 'login account',
+        type: LoginDtoUser,
+      })
     @Post("login")
      async login(@User()user){
         

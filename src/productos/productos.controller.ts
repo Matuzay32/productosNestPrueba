@@ -63,7 +63,7 @@ export class ProductosController {
    }
 
 
-   @ApiQuery({ name: 'id' })
+   @ApiQuery({ name: 'id',description:"Ponga el id para poder actualizar el producto" })
    @ApiBody({
     description: 'Update Product',
     type: CreateProductoDto,

@@ -21,7 +21,7 @@ export class UsuariosController {
     
   }
   @ApiOkResponse({
-    description: 'create User',
+    description: 'response  User',
     type: CreateDtoUsuario,
     isArray:true
   })
@@ -55,7 +55,7 @@ export class UsuariosController {
 
   }
 
-  @ApiQuery({ name: 'id' })
+  @ApiQuery({ name: 'id' , description: "poner id para actualizar el usuario"})
   @ApiBody({
    description: 'Update user',
    type: CreateDtoUsuario,

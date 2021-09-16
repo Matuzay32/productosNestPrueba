@@ -8,7 +8,7 @@ import {CreateUsuarioInterface} from "./interfaces/usuario.interface"
 import * as bcrypt from 'bcrypt';
 import{Config,secret} from "./interfaces/usuario.interface"
 import{sign} from "jsonwebtoken"
-
+import { AppRoles } from 'src/app.roles';
 
 
 @Injectable()
@@ -34,6 +34,8 @@ export class UsuariosService {
        const userExist =await this.usuariosModel.findOne({ email: userCreate.email });
 
        if (userExist) throw new NotFoundException("El Usuario ya se encuentra en la base de datos");
+       
+
         //ENCRIPTO PASSWORD
         await this.encriptPassword(userCreate)
         const usuario = this.usuariosModel.create(userCreate);

@@ -1,5 +1,4 @@
 import { RolesBuilder } from 'nest-access-control';
-import { UsuarioSchema } from './usuarios/schemas/usuario.schema';
 
 export enum AppRoles {
     USER = 'USER',

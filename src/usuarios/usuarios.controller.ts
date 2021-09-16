@@ -20,6 +20,7 @@ export class UsuariosController {
     type: CreateDtoUsuario,
   })
   async createUser(@Body()CreateDtoUsuario:CreateDtoUsuario):Promise<{token:string} | CreateDtoUsuario> {
+    
     return await this.usuariosService.createUser(CreateDtoUsuario);
     
   }

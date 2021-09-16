@@ -19,11 +19,7 @@ export const UsuarioSchema=new Schema({
             type: Date, 
             default: Date.now 
         },
-        role:{
-            type:[String]
-        }
-
-
+        
 })
 
 

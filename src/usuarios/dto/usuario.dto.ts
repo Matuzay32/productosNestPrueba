@@ -11,7 +11,6 @@ export class CreateDtoUsuario{
     email:string;
     
     @ApiProperty()
-    role:string[];
     
 
 }

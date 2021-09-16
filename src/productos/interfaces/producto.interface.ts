@@ -4,4 +4,5 @@ export interface ProductoInterface {
   description: string;
   imageUrl: string;
   createdAt: Date;
+
 }

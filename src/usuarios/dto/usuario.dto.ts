@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 
+
 export class CreateDtoUsuario{
     @ApiProperty()
     user:string;
@@ -9,5 +10,9 @@ export class CreateDtoUsuario{
     @ApiProperty()
 
     email:string;
+    
+    @ApiProperty()
+    role:string[];
+    
 
 }

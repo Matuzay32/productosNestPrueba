@@ -1,9 +1,12 @@
-import { Controller, Get,Post,Delete,Put,Body,Param,Query,Res,MethodNotAllowedException,HttpException,HttpModuleOptions,HttpStatus} from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import{CreateUsuarioInterface} from "./interfaces/usuario.interface"
 import {CreateDtoUsuario} from "./dto/usuario.dto"
 import { Response } from 'express';
 import { ApiProperty,ApiTags,ApiBody,ApiOkResponse,ApiQuery,ApiParam} from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Delete,UseGuards, Get, Param, Post,NotFoundException ,Put,Query,Res} from '@nestjs/common';
+
+
 
 @ApiTags(`Users`)
 @Controller("usuarios")

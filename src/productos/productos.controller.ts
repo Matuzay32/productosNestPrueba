@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post,NotFoundException ,Put,Query,Res} from '@nestjs/common';
+import { Body, Controller, Delete,UseGuards, Get, Param, Post,NotFoundException ,Put,Query,Res} from '@nestjs/common';
 import { ProductosService } from './productos.service';
 import { ProductoInterface } from './interfaces/producto.interface';
 import { CreateProductoDto } from './dto/productos.dto';
+import { AuthGuard } from '@nestjs/passport';
+
 import{Response}from "express";
 import { ApiBody,ApiBearerAuth,ApiTags,ApiResponse,ApiProperty,ApiOkResponse,ApiParam,ApiQuery} from '@nestjs/swagger';
 
@@ -20,7 +22,7 @@ export class ProductosController {
     return this.productoServ.findAll();
   }
 
-
+  
   @ApiOkResponse({
     description: 'find product',
     type: CreateProductoDto,
@@ -40,6 +42,9 @@ export class ProductosController {
     type: CreateProductoDto,
     isArray:true
   })
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
+
   @Post()
   async create(@Body() CreateProductoDto: CreateProductoDto[]) {
     CreateProductoDto.forEach((element) => {
@@ -52,7 +57,10 @@ export class ProductosController {
     description: 'Product delete',
     type: CreateProductoDto,
   })
+
   @ApiParam({name: 'id', required: true, description: "poner id para borrar producto"})
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
   @Delete("/:id")
   
   async deleteProduct(@Param("id")id ){
@@ -68,6 +76,8 @@ export class ProductosController {
     description: 'Update Product',
     type: CreateProductoDto,
   })
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
    @Put()
    // de esta forma se puede hacer un metodo put por la busqueda o query
    //es similar al param

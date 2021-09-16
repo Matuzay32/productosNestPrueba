@@ -31,9 +31,9 @@ export class UsuariosService {
 
 
     async createUser(userCreate: CreateDtoUsuario): Promise<{token:string} | CreateUsuarioInterface>{
-        
+       const userExist =await this.usuariosModel.findOne({ email: userCreate.email });
 
-       // if (userExist) throw new NotFoundException("El Usuario ya se encuentra en la base de datos");
+       if (userExist) throw new NotFoundException("El Usuario ya se encuentra en la base de datos");
         //ENCRIPTO PASSWORD
         await this.encriptPassword(userCreate)
         const usuario = this.usuariosModel.create(userCreate);

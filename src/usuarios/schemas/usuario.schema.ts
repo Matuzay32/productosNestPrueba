@@ -18,8 +18,10 @@ export const UsuarioSchema=new Schema({
         date: { 
             type: Date, 
             default: Date.now 
+        },
+        roles:{
+            type:[String]
         }
-
 
 
 })

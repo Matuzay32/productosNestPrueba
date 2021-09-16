@@ -10,7 +10,6 @@ export class CreateDtoUsuario{
 
     email:string;
     
-    @ApiProperty()
     
 
 }

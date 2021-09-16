@@ -8,7 +8,6 @@ import {CreateUsuarioInterface} from "./interfaces/usuario.interface"
 import * as bcrypt from 'bcrypt';
 import{Config,secret} from "./interfaces/usuario.interface"
 import{sign} from "jsonwebtoken"
-import { AppRoles } from 'src/app.roles';
 
 
 @Injectable()

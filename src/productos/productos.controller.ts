@@ -6,6 +6,9 @@ import { AuthGuard } from '@nestjs/passport';
 
 import{Response}from "express";
 import { ApiBody,ApiBearerAuth,ApiTags,ApiResponse,ApiProperty,ApiOkResponse,ApiParam,ApiQuery} from '@nestjs/swagger';
+import { Role } from 'src/role/role.enum';
+import { Roles } from 'src/decorators/roles.decorator';
+import { RolesGuard } from 'src/role/roles.guard';
 
 @ApiTags("Products")
 @Controller('productos')
@@ -42,9 +45,9 @@ export class ProductosController {
     type: CreateProductoDto,
     isArray:true
   })
-  @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
-
+  @UseGuards(AuthGuard("jwt"),RolesGuard)
+  @Roles(Role.Admin)
   @Post()
   async create(@Body() CreateProductoDto: CreateProductoDto[]) {
     CreateProductoDto.forEach((element) => {
@@ -57,9 +60,10 @@ export class ProductosController {
     description: 'Product delete',
     type: CreateProductoDto,
   })
-
+  @Roles(Role.Admin)
   @ApiParam({name: 'id', required: true, description: "poner id para borrar producto"})
-  @UseGuards(AuthGuard("jwt"))
+  @UseGuards(AuthGuard("jwt"),RolesGuard)
+  @Roles(Role.Admin)
   @ApiBearerAuth()
   @Delete("/:id")
   
@@ -71,17 +75,18 @@ export class ProductosController {
    }
 
 
-   @ApiQuery({ name: 'id',description:"Ponga el id para poder actualizar el producto" })
-   @ApiBody({
+  @ApiQuery({ name: 'id',description:"Ponga el id para poder actualizar el producto" })
+  @ApiBody({
     description: 'Update Product',
     type: CreateProductoDto,
   })
+  @UseGuards(AuthGuard("jwt"),RolesGuard)
+  @Roles(Role.Admin)
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
    @Put()
    // de esta forma se puede hacer un metodo put por la busqueda o query
    //es similar al param
-   
    async updateProduct(@Res() res: Response,@Body()creaDto:CreateProductoDto, @Query("id")id ){
     const producto=await this.productoServ.updateProduct(id,creaDto);
     res.send({creaDto, update:"OK"});

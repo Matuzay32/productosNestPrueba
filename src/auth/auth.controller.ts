@@ -1,11 +1,15 @@
 import { Controller, Post,Get, UseGuards, Req,} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBody,ApiBearerAuth,ApiTags,ApiResponse,ApiProperty,ApiOkResponse,ApiParam,ApiQuery} from '@nestjs/swagger';
-
 import { User } from 'src/decorators';
+import { Roles } from 'src/decorators/roles.decorator';
+import { Role } from 'src/role/role.enum';
+import { RolesGuard } from 'src/role/roles.guard';
 import {CreateUsuarioInterface,Config,secret}from "../usuarios/interfaces/usuario.interface"
 import { AuthService } from './auth.service';
 import {LoginDtoUser} from "./dto/login.dto"
+
+
 @ApiTags("User auth")
 
 @Controller('auth')
@@ -34,7 +38,8 @@ export class AuthController {
 
 
 
-
+    @Roles(Role.Admin)
+    @UseGuards(RolesGuard)
     @UseGuards(AuthGuard("jwt"))
     @ApiBearerAuth()
     @Get("profileAcount")

@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Role } from "src/role/role.enum";
 
 export class CreateProductoDto {
   @ApiProperty()
@@ -15,4 +16,6 @@ export class CreateProductoDto {
   @ApiProperty()
 
   createdAt: Date;
+
+  // roles: Role[];  
 }

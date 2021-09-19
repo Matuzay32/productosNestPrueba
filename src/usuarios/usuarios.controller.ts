@@ -5,6 +5,10 @@ import { Response } from 'express';
 import { ApiProperty,ApiTags,ApiBody,ApiOkResponse,ApiQuery,ApiParam,ApiBearerAuth} from '@nestjs/swagger';
 import { AuthGuard, } from '@nestjs/passport';
 import { Body, Controller, Delete,UseGuards, Get, Param, Post,NotFoundException ,Put,Query,Res} from '@nestjs/common';
+import { Roles } from 'src/decorators/roles.decorator';
+import {Role} from "../role/role.enum"
+import { RolesGuard } from 'src/role/roles.guard';
+
 
 
 
@@ -13,36 +17,31 @@ import { Body, Controller, Delete,UseGuards, Get, Param, Post,NotFoundException 
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
   
-  
-  @Post()
   @ApiBody({
     description: 'create User',
     type: CreateDtoUsuario,
   })
+  @Post()
+  @ApiOkResponse({
+    description: 'response  User',
+    type: CreateDtoUsuario,
+    isArray:true
+  })
+  
   async createUser(@Body()CreateDtoUsuario:CreateDtoUsuario):Promise<{token:string} | CreateDtoUsuario> {
     
     return await this.usuariosService.createUser(CreateDtoUsuario);
     
   }
   
-  @ApiOkResponse({
-    description: 'response  User',
-    type: CreateDtoUsuario,
-    isArray:true
-  })
-  @UseGuards(AuthGuard("jwt"))
-  @ApiBearerAuth()
-  @Get()
-  getAllUsers():Promise<CreateDtoUsuario[]> {
-    return this.usuariosService.findAllUsers();
-  }
-  @ApiOkResponse({
-    description: 'User find',
-    type: CreateDtoUsuario,
-  })
-  @UseGuards(AuthGuard("jwt"))
-  @ApiBearerAuth()
+ 
+
   @ApiParam({name: 'id', required: true, description: "poner id para encontrar usuario"})
+  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard("jwt"))
+  @ApiBearerAuth()
+ 
   @Get("/:id")
   findOne(@Param("id")id:string):Promise<CreateDtoUsuario>{
     return this.usuariosService.findOneUser(id);
@@ -56,9 +55,8 @@ export class UsuariosController {
     description: 'User delete',
     type: CreateDtoUsuario,
   })
-
-  @UseGuards(AuthGuard("jwt"))
-  @ApiBearerAuth()
+  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)
   @ApiParam({name: 'id', required: true, description: "poner id para borrar usuario"})
   @Delete("/:id")
   deleteUser(@Param("id")id:string):Promise<CreateDtoUsuario>{
@@ -66,7 +64,8 @@ export class UsuariosController {
 
 
   }
-  
+  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @ApiQuery({ name: 'id' , description: "poner id para actualizar el usuario"})
@@ -83,6 +82,20 @@ export class UsuariosController {
        
     }
 
+
+ 
+    @ApiOkResponse({
+      description: 'User find',
+      type: CreateDtoUsuario,
+    })
+
+ @Roles(Role.Admin)
+  @UseGuards(AuthGuard("jwt"),RolesGuard)
+  @ApiBearerAuth()
+  @Get()
+  getAllUsers():Promise<CreateDtoUsuario[]> {
+    return this.usuariosService.findAllUsers();
+  }
 
 
 }

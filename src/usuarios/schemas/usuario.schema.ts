@@ -17,8 +17,15 @@ export const UsuarioSchema=new Schema({
         },
         date: { 
             type: Date, 
-            default: Date.now 
+            default: Date.now //
         },
+
+        roles: {
+            type: [],
+            
+          }        
+    
+
         
 })
 

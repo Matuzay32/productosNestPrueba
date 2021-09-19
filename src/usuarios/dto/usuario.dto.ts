@@ -5,13 +5,10 @@ export class CreateDtoUsuario{
     @ApiProperty()
     user:string;
     @ApiProperty()
-    
     password:string;
     @ApiProperty()
-
     email:string;
     @ApiProperty()
-    
     roles: Role[];
 
 }

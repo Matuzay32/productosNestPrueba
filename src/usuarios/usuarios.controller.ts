@@ -1,7 +1,7 @@
 import { UsuariosService } from './usuarios.service';
 import{CreateUsuarioInterface} from "./interfaces/usuario.interface"
 import {CreateDtoUsuario} from "./dto/usuario.dto"
-import { Response } from 'express';
+import { Response,Request } from 'express';
 import { ApiProperty,ApiTags,ApiBody,ApiOkResponse,ApiQuery,ApiParam,ApiBearerAuth} from '@nestjs/swagger';
 import { AuthGuard, } from '@nestjs/passport';
 import { Body, Controller, Delete,UseGuards, Get, Param, Post,NotFoundException ,Put,Query,Res} from '@nestjs/common';
@@ -30,18 +30,37 @@ export class UsuariosController {
   
   async createUser(@Body()CreateDtoUsuario:CreateDtoUsuario):Promise<{token:string} | CreateDtoUsuario> {
     
+    // if (CreateDtoUsuario.roles !=["admin"]) throw new NotFoundException("El rol es incorrecto")
+
+    for (let index = 0; index < CreateDtoUsuario.roles.length; index++) {
+
+     if( CreateDtoUsuario.roles[index] =="admin"|| CreateDtoUsuario.roles[index] =="user"){
     return await this.usuariosService.createUser(CreateDtoUsuario);
+
+
+     }else{
+      throw new NotFoundException("Debe ingresar un tipo de rol correcto")
+
+     }
+      
+    }
+
+    
     
   }
   
- 
+  
+  @ApiOkResponse({
+    description: 'User find',
+    type: CreateDtoUsuario,
+  })
 
-  @ApiParam({name: 'id', required: true, description: "poner id para encontrar usuario"})
+
   @Roles(Role.Admin)
   @UseGuards(RolesGuard)
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
- 
+  @ApiParam({name: 'id', required: true, description: "poner id para encontrar usuario"})
   @Get("/:id")
   findOne(@Param("id")id:string):Promise<CreateDtoUsuario>{
     return this.usuariosService.findOneUser(id);
@@ -81,13 +100,6 @@ export class UsuariosController {
     return usuario;
        
     }
-
-
- 
-    @ApiOkResponse({
-      description: 'User find',
-      type: CreateDtoUsuario,
-    })
 
  @Roles(Role.Admin)
   @UseGuards(AuthGuard("jwt"),RolesGuard)

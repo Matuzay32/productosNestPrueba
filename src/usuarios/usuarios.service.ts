@@ -32,6 +32,18 @@ export class UsuariosService {
     async createUser(userCreate: CreateDtoUsuario): Promise<{token:string} | CreateUsuarioInterface>{
        const userExist =await this.usuariosModel.findOne({ email: userCreate.email });
 
+
+       for (let index = 0; index < userCreate.roles.length; index++) {
+
+        if( userCreate.roles[index] =="admin"|| userCreate.roles[index] =="user"){
+   
+   
+        }else{
+         throw new NotFoundException("Debe ingresar un tipo de rol correcto")
+   
+        }
+    }
+
        if (userExist) throw new NotFoundException("El Usuario ya se encuentra en la base de datos");
     
 

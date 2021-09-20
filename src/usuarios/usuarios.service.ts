@@ -72,7 +72,9 @@ export class UsuariosService {
 
 
     async findOneUser(id: string): Promise < CreateUsuarioInterface > {
-        return await this.usuariosModel.findById(id);
+
+     
+         return await this.usuariosModel.findById(id);
     }
 
 

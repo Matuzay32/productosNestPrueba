@@ -27,8 +27,13 @@ export class ProductosService {
           return this.productoModel.find();
 
       }
-    async findOne(id:string):Promise<ProductoInterface>{
-        const producto = await this.productoModel.findById(id);
+    async findOne(nombre:string):Promise<ProductoInterface>{
+
+      const producto  =await this.productoModel.findOne({ name: nombre });
+
+
+      return producto;
+       // const producto = await this.productoModel.findById(id);
         return  producto;
 
       }

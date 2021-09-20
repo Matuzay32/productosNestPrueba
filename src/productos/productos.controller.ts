@@ -30,10 +30,10 @@ export class ProductosController {
     description: 'find product',
     type: CreateProductoDto,
   })
-  @ApiParam({name: 'id', required: true, description: "poner id para obtener el producto"})
-  @Get("/:id")
- async findOne(@Param("id")id){
-  const producto=await this.productoServ.findOne(id);
+  @ApiParam({name: 'nombre', required: true, description: "poner nombre para obtener el producto"})
+  @Get("/:nombre")
+ async findOne(@Param("nombre")nombre){
+  const producto=await this.productoServ.findOne(nombre);
      if(!producto)throw new NotFoundException("no existe el producto");
      console.log(producto)
      return producto;
@@ -45,8 +45,8 @@ export class ProductosController {
     type: CreateProductoDto,
     isArray:true
   })
-  @ApiBearerAuth()
   @UseGuards(AuthGuard("jwt"),RolesGuard)
+  @ApiBearerAuth()
   @Roles(Role.Admin)
   @Post()
   async create(@Body() CreateProductoDto: CreateProductoDto[]) {
@@ -61,9 +61,9 @@ export class ProductosController {
     type: CreateProductoDto,
   })
   @Roles(Role.Admin)
+  @UseGuards(RolesGuard)
   @ApiParam({name: 'id', required: true, description: "poner id para borrar producto"})
-  @UseGuards(AuthGuard("jwt"),RolesGuard)
-  @Roles(Role.Admin)
+  @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
   @Delete("/:id")
   
@@ -80,8 +80,8 @@ export class ProductosController {
     description: 'Update Product',
     type: CreateProductoDto,
   })
-  @UseGuards(AuthGuard("jwt"),RolesGuard)
   @Roles(Role.Admin)
+  @UseGuards(RolesGuard)
   @UseGuards(AuthGuard("jwt"))
   @ApiBearerAuth()
    @Put()
